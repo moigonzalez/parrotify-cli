@@ -1,0 +1,23 @@
+{
+  "name": "parrotify-cli",
+  "version": "0.0.1",
+  "description": "Parrotify anything from your command line",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moigonzalez/parrotify-cli.git"
+  },
+  "keywords": [
+    "parrot",
+    "party-parrot"
+  ],
+  "author": "Moises Gonzalez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/moigonzalez/parrotify-cli/issues"
+  },
+  "homepage": "https://github.com/moigonzalez/parrotify-cli#readme"
+}
