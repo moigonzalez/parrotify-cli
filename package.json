@@ -8,7 +8,7 @@
     "watch": "babel -w lib -d build"
   },
   "bin": {
-    "parrotify": "bin/parrotify-cli.js"
+    "parrotify": "build/parrotify.js"
   },
   "repository": {
     "type": "git",
@@ -35,6 +35,7 @@
     "babel-preset-react": "^6.24.1"
   },
   "dependencies": {
+    "commander": "^2.11.0",
     "got": "^7.1.0",
     "ink": "^0.3.0",
     "ink-image": "^1.1.1",

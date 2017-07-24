@@ -3,13 +3,14 @@ const Image = require('ink-image');
 const got = require('got');
 const fs = require('fs');
 const Spinner = require('ink-spinner');
+const Args = require('./args');
 
 class Parrotify extends Component {
 
 	constructor() {
 		super();
 
-		this.basicCall = 'https://ppaas.herokuapp.com/partyparrot';
+		this.endpoint = 'https://ppaas.herokuapp.com/partyparrot';
 		this.state = {
 			'parrot': undefined
 		};
@@ -17,8 +18,6 @@ class Parrotify extends Component {
 
 	render(props, state) {
 		if (!this.state.parrot) {
-			// Note that you can return false it you want nothing to be put in the dom
-			// This is also your chance to render a spinner or something...
 			return h(
 				'div',
 				null,
@@ -26,24 +25,32 @@ class Parrotify extends Component {
 				' Busy generating your parrot'
 			);
 		}
-		return h(Image, { preserveAspectRatio: true, src: `${this.state.parrot}` });
+
+		return h(Image, { src: `${this.state.parrot}` });
 	}
 
 	componentDidMount() {
 		const self = this;
-		got(`${this.basicCall}`, { encoding: null }).then(response => {
+		got(`${this.endpoint}`, { encoding: null }).then(response => {
 			let data = "data:" + response.headers["content-type"] + ";base64," + new Buffer(response.body).toString('binary');
 			let base64Data = data.replace(/^data:image\/gif;base64,/, '');
 
-			fs.writeFile('out.gif', base64Data, 'binary', function (err) {
+			fs.writeFile('parrot.gif', base64Data, 'binary', function (err) {
 				self.setState({
-					parrot: 'out.gif'
+					parrot: 'parrot.gif'
 				});
 			});
 		}).catch(error => {
 			console.log(error.response.body);
 		});
 	}
+
+	componentWillMount() {
+		const args = new Args().program;
+		if (args.size === 'mega') {
+			this.endpoint = `${this.endpoint}/mega`;
+		}
+	}
 }
 
-const unmount = render(h(Parrotify, null));
+render(h(Parrotify, null));
