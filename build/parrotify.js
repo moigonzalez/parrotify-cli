@@ -47,9 +47,7 @@ class Parrotify extends Component {
 
 	componentWillMount() {
 		const args = new Args().program;
-		if (args.size === 'mega') {
-			this.endpoint = `${this.endpoint}/mega`;
-		}
+		this.endpoint = `${this.endpoint}/${args.base}`;
 	}
 }
 
