@@ -2,22 +2,42 @@
   "name": "parrotify-cli",
   "version": "0.0.1",
   "description": "Parrotify anything from your command line",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel lib --out-dir build",
+    "watch": "babel -w lib -d build"
+  },
+  "bin": {
+    "parrotify": "bin/parrotify-cli.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/moigonzalez/parrotify-cli.git"
   },
+  "engines": {
+    "node": ">=8"
+  },
   "keywords": [
     "parrot",
-    "party-parrot"
+    "party-parrot",
+    "partyparrot",
+    "cli"
   ],
   "author": "Moises Gonzalez",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/moigonzalez/parrotify-cli/issues"
   },
-  "homepage": "https://github.com/moigonzalez/parrotify-cli#readme"
+  "homepage": "https://github.com/moigonzalez/parrotify-cli#readme",
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-preset-react": "^6.24.1"
+  },
+  "dependencies": {
+    "got": "^7.1.0",
+    "ink": "^0.3.0",
+    "ink-image": "^1.1.1",
+    "ink-spinner": "^1.0.0"
+  }
 }

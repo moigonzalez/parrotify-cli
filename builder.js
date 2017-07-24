@@ -1,0 +1,1 @@
+const parrotify = require('lib/parrotify');
