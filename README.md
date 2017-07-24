@@ -4,8 +4,23 @@ Custom parrots from your command line :tada:
 
 ![parrotify-cli demo](images/mega-demo.gif "parrotify-cli demo")
 
+Usage
+-----
 
 ```
 > parrotify [options]
 
+  Options:
+
+    -V, --version           output the version number
+    -b --base [base]        Base parrot to use
+    -o --overlay [overlay]  Image to place on top of the parrot
+    -x --posX [x]           X Position of the overlay
+    -y --posY [y]           Y Position of the overlay
+    -d --delay [delay]      How hard does the parrot party?
+    -h, --help              output usage information
+
 ```
+
+Built using [Parrot As A Service](https://github.com/francoislg/PPaaS)
+
