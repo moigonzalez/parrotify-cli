@@ -10,15 +10,18 @@ Usage
 ```
 > parrotify [options]
 
+
   Options:
 
-    -V, --version           output the version number
-    -b --base [base]        Base parrot to use
-    -o --overlay [overlay]  Image to place on top of the parrot
-    -x --posX [x]           X Position of the overlay
-    -y --posY [y]           Y Position of the overlay
-    -d --delay [delay]      How hard does the parrot party?
-    -h, --help              output usage information
+    -V, --version                       output the version number
+    -b --base [base]                    Base parrot to use
+    -o --overlay [overlay]              Image to place on top of the parrot
+    -x --posX [posX]                    X Position of the overlay
+    -y --posY [posY]                    Y Position of the overlay
+    -h --overlayHeight [overlayHeight]  Height of the overlay
+    -w --overlayWidth [overlayWidth]    Width of the overlay
+    -d --delay [delay]                  How hard does the parrot party?
+    -h, --help                          output usage information
 
 ```
 
