@@ -22,5 +22,15 @@ Usage
 
 ```
 
+TODO
+-----
+
+- Fix negative values for posX and posY whenever [this is fixed](https://github.com/tj/commander.js/issues/61)
+- Error handling whenever user data is not entered properly (missing overlay and positions defined)
+- Give proper default values to positions
+- Develop something more user friendly than positioning with coordinates (show overlay as hat, hand item, etc)
+
+-----
+
 Built using [Parrot As A Service](https://github.com/francoislg/PPaaS)
 
