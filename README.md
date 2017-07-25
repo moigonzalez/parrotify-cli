@@ -2,7 +2,7 @@
 
 Custom parrots from your command line :tada:
 
-![parrotify-cli demo](images/mega-demo.gif "parrotify-cli demo")
+![parrotify-cli demo](images/demo-mega.gif "parrotify-cli demo")
 
 Usage
 -----
