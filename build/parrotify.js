@@ -54,7 +54,6 @@ class Parrotify extends Component {
 		this.endpoint = `${this.endpoint}&overlayOffsetY=${args.posY}`;
 		this.endpoint = `${this.endpoint}&overlayHeight=${args.overlayHeight}`;
 		this.endpoint = `${this.endpoint}&overlayWidth=${args.overlayWidth}`;
-		console.log(this.endpoint);
 	}
 }
 
