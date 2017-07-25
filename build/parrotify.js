@@ -48,6 +48,13 @@ class Parrotify extends Component {
 	componentWillMount() {
 		const args = new Args().program;
 		this.endpoint = `${this.endpoint}/${args.base}`;
+		this.endpoint = `${this.endpoint}?overlay=${args.overlay}`;
+		this.endpoint = `${this.endpoint}&delay=${args.delay}`;
+		this.endpoint = `${this.endpoint}&overlayOffsetX=${args.posX}`;
+		this.endpoint = `${this.endpoint}&overlayOffsetY=${args.posY}`;
+		this.endpoint = `${this.endpoint}&overlayHeight=${args.overlayHeight}`;
+		this.endpoint = `${this.endpoint}&overlayWidth=${args.overlayWidth}`;
+		console.log(this.endpoint);
 	}
 }
 
