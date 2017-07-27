@@ -13,11 +13,12 @@ Usage
 
   Options:
 
-    -V, --version                       output the version number
-    -b --base [base]                    Base parrot to use
-    -o --overlay [overlay]              Image to place on top of the parrot
-    -d --delay [delay]                  How hard does the parrot party?
-    -h, --help                          output usage information
+    -V, --version             output the version number
+    -b --base [base]          Base parrot to use
+    -o --overlay [overlay]    Image to place on top of the parrot
+    -p --position [position]  Position of the overlay (face, hand or hat)
+    -d --delay [delay]        How hard does the parrot party?
+    -h, --help                output usage information
 
 ```
 

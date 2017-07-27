@@ -80,21 +80,16 @@ class Parrotify extends Component {
   }
 
   componentDidMount() {
-    // 35x25
-    // 329x229
     const self = this;
     if (this.args.overlay !== '') {
       probe(this.args.overlay, (err, result) => {
         if (result) {
           const ratio = this.getRatio(this.args.base, this.args.position, result);
           const imgSizes = { width: Math.round(result.width * ratio), height: Math.round(result.height * ratio) };
-          console.log('img', imgSizes);
           this.endpoint = `${this.endpoint}&overlayHeight=${imgSizes.height}`;
           this.endpoint = `${this.endpoint}&overlayWidth=${imgSizes.width}`;
-          console.log(this.endpoint);
           this.endpoint = `${this.endpoint}&overlayOffsetX=${this.getOffset(this.args.base, this.args.position, imgSizes).x}`;
           this.endpoint = `${this.endpoint}&overlayOffsetY=${this.getOffset(this.args.base, this.args.position, imgSizes).y}`;
-          console.log(this.endpoint);
           got(`${this.endpoint}`, { encoding: null }).then(response => {
             let data = 'data:' + response.headers['content-type'] + ';base64,' + new Buffer(response.body).toString('binary');
             let base64Data = data.replace(/^data:image\/gif;base64,/, '');
@@ -118,10 +113,6 @@ class Parrotify extends Component {
     this.endpoint = `${this.endpoint}?overlay=${args.overlay}`;
     this.endpoint = `${this.endpoint}&delay=${args.delay}`;
     this.args = args;
-    /* this.endpoint = `${this.endpoint}&overlayOffsetX=${args.posX}`;
-    this.endpoint = `${this.endpoint}&overlayOffsetY=${args.posY}`;
-    this.endpoint = `${this.endpoint}&overlayHeight=${args.overlayHeight}`;
-    this.endpoint = `${this.endpoint}&overlayWidth=${args.overlayWidth}`; */
   }
 }
 
