@@ -39,6 +39,7 @@
     "got": "^7.1.0",
     "ink": "^0.3.0",
     "ink-image": "^1.1.1",
-    "ink-spinner": "^1.0.0"
+    "ink-spinner": "^1.0.0",
+    "probe-image-size": "^3.1.0"
   }
 }

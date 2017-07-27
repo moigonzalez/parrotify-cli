@@ -16,14 +16,12 @@ Usage
     -V, --version                       output the version number
     -b --base [base]                    Base parrot to use
     -o --overlay [overlay]              Image to place on top of the parrot
-    -x --posX [posX]                    X Position of the overlay
-    -y --posY [posY]                    Y Position of the overlay
-    -h --overlayHeight [overlayHeight]  Height of the overlay
-    -w --overlayWidth [overlayWidth]    Width of the overlay
     -d --delay [delay]                  How hard does the parrot party?
     -h, --help                          output usage information
 
 ```
+
+The overlay will autoposition itself based on it's ratio and chosen base (experimental).
 
 TODO
 -----
@@ -31,7 +29,6 @@ TODO
 - Fix negative values for posX and posY whenever [this is fixed](https://github.com/tj/commander.js/issues/61)
 - Error handling whenever user data is not entered properly (missing overlay and positions defined)
 - Give proper default values to positions
-- Develop something more user friendly than positioning with coordinates (show overlay as hat, hand item, etc)
 
 -----
 
