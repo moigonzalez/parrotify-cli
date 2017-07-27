@@ -5,6 +5,7 @@ const fs = require('fs');
 const Spinner = require('ink-spinner');
 const Args = require('./args');
 const probe = require('probe-image-size');
+const parrotSizes = require('./parrotsizes');
 
 class Parrotify extends Component {
   constructor() {
@@ -28,91 +29,75 @@ class Parrotify extends Component {
     return h(Image, { src: `${this.state.parrot}` });
   }
 
-  getRatio(base, position, result) {
+  getRatio(parrot, position, result) {
     let size;
-    if (base === 'mega') {
-      if (position === 'face') {
-        size = 329 * 0.5;
-      } else if (position === 'hat') {
-        size = 229 * 0.3;
-      } else {
-        size = 329 * 0.3;
-      }
-    } else {
-      if (position === 'face') {
-        size = 39 * 0.5;
-      } else if (position === 'hat') {
-        size = 25 * 0.2;
-      } else {
-        size = 39 * 0.3;
-      }
+    switch (position) {
+      case 'face':
+        size = parrot.width * 0.5;
+        break;
+      case 'hat':
+        size = parrot.height * 0.3;
+        break;
+      default:
+        size = parrot.width * 0.3;
     }
     return Math.min(size / result.width, size / result.height);
   }
 
-  getOffset(base, position, size) {
+  getOffset(parrot, position, result) {
     let x;
     let y;
-    if (base === 'mega') {
-      if (position === 'face') {
-        x = size.width > size.height ? 329 / 8 * -1 : 0;
-        y = size.height > size.width ? 229 / 2 * -1 : 229 / 2 * -1;
-      } else if (position === 'hat') {
-        x = 329 / 10;
-        y = size.height > size.width ? 229 / 1.8 * -1 : 229 / 2 * -1;
-      } else {
-        x = 329 / 4;
-        y = size.height > size.width ? size.height / 5 : size.height / 5;
-      }
-    } else {
-      if (position === 'face') {
-        x = size.width > size.height ? 35 / 8 * -1 : 0;
-        y = size.height > size.width ? 25 / 2 * -1 : 25 / 2 * -1;
-      } else if (position === 'hat') {
-        x = 35 / 10;
-        y = size.height > size.width ? 25 / 1.8 * -1 : 25 / 2 * -1;
-      } else {
-        x = 35 / 4;
-        y = size.height > size.width ? size.height / 5 : size.height / 5;
-      }
+    switch (position) {
+      case 'face':
+        x = result.width > result.height ? parrot.width / 8 * -1 : 0;
+        y = result.height > result.width ? parrot.height / 2 * -1 : parrot.height / 2 * -1;
+        break;
+      case 'hat':
+        x = parrot.width / 10;
+        y = result.height > result.width ? parrot.height / 1.8 * -1 : parrot.height / 2 * -1;
+        break;
+      default:
+        x = parrot.width / 4;
+        y = result.height / 5;
     }
     return { x: Math.round(x), y: Math.round(y) };
   }
 
   componentDidMount() {
-    const self = this;
     if (this.args.overlay !== '') {
-      probe(this.args.overlay, (err, result) => {
+      const res = probe(this.args.overlay);
+      res.then(result => {
         if (result) {
-          const ratio = this.getRatio(this.args.base, this.args.position, result);
+          const ratio = this.getRatio(parrotSizes[this.args.base], this.args.position, result);
           const imgSizes = { width: Math.round(result.width * ratio), height: Math.round(result.height * ratio) };
           this.endpoint = `${this.endpoint}&overlayHeight=${imgSizes.height}`;
           this.endpoint = `${this.endpoint}&overlayWidth=${imgSizes.width}`;
-          this.endpoint = `${this.endpoint}&overlayOffsetX=${this.getOffset(this.args.base, this.args.position, imgSizes).x}`;
-          this.endpoint = `${this.endpoint}&overlayOffsetY=${this.getOffset(this.args.base, this.args.position, imgSizes).y}`;
-          got(`${this.endpoint}`, { encoding: null }).then(response => {
-            let data = 'data:' + response.headers['content-type'] + ';base64,' + new Buffer(response.body).toString('binary');
-            let base64Data = data.replace(/^data:image\/gif;base64,/, '');
-
-            fs.writeFile('parrot.gif', base64Data, 'binary', function (err) {
-              self.setState({
-                parrot: 'parrot.gif'
-              });
-            });
-          }).catch(error => {
-            console.log(error.response.body);
-          });
+          this.endpoint = `${this.endpoint}&overlayOffsetX=${this.getOffset(parrotSizes[this.args.base], this.args.position, imgSizes).x}`;
+          this.endpoint = `${this.endpoint}&overlayOffsetY=${this.getOffset(parrotSizes[this.args.base], this.args.position, imgSizes).y}`;
         }
+        got(`${this.endpoint}`, { encoding: null }).then(response => {
+          let data = 'data:' + response.headers['content-type'] + ';base64,' + new Buffer(response.body).toString('binary');
+          let base64Data = data.replace(/^data:image\/gif;base64,/, '');
+
+          fs.writeFile('parrot.gif', base64Data, 'binary', err => {
+            this.setState({
+              parrot: 'parrot.gif'
+            });
+          });
+        }).catch(error => {
+          console.log(error.response.body);
+        });
+      }, error => {
+        console.log(error);
       });
     }
   }
 
   componentWillMount() {
-    const args = new Args().program;
-    this.endpoint = `${this.endpoint}/${args.base}`;
-    this.endpoint = `${this.endpoint}?overlay=${args.overlay}`;
-    this.endpoint = `${this.endpoint}&delay=${args.delay}`;
-    this.args = args;
+    this.args = new Args().program;
+    this.endpoint = `${this.endpoint}/${this.args.base}`;
+    this.endpoint = `${this.endpoint}?overlay=${this.args.overlay}`;
+    this.endpoint = `${this.endpoint}&delay=${this.args.delay}`;
   }
 }
 
