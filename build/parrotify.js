@@ -1,3 +1,6 @@
+#!/bin/env node
+
+
 const { h, render, Component } = require('ink');
 const Image = require('ink-image');
 const got = require('got');
