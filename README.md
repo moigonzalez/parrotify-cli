@@ -2,7 +2,17 @@
 
 Custom parrots from your command line :tada:
 
-![parrotify-cli demo](images/demo-mega.gif "parrotify-cli demo")
+![parrotify-cli demo](images/parrotify-demo.gif "parrotify-cli demo")
+
+Installation
+-----
+
+Requires node > 8
+
+```
+npm install -g parrotify
+```
+
 
 Usage
 -----
@@ -24,12 +34,14 @@ Usage
 
 The overlay will autoposition itself based on it's ratio and chosen base (experimental).
 
+A gif file will be generated in the current path showing the result parrot.
+
 TODO
 -----
 
-- Fix negative values for posX and posY whenever [this is fixed](https://github.com/tj/commander.js/issues/61)
 - Error handling whenever user data is not entered properly (missing overlay and positions defined)
-- Give proper default values to positions
+
+- Give an error when node version < 8
 
 -----
 
