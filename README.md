@@ -10,9 +10,8 @@ Installation
 Requires node > 8
 
 ```
-npm install -g parrotify
+npm install -g parrotify-cli
 ```
-
 
 Usage
 -----
