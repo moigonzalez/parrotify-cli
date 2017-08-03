@@ -4,17 +4,17 @@ Custom parrots from your command line :tada:
 
 ![parrotify-cli demo](images/parrotify-demo.gif "parrotify-cli demo")
 
-Installation
------
-
-Requires node > 8
+## Installation
 
 ```
 npm install -g parrotify-cli
 ```
 
-Usage
------
+Requires node > 8
+
+To display the parrot in your command line you need iTerm > 3, a parrot.gif will be generated in your current directory anyway.
+
+## Usage
 
 ```
 > parrotify [options]
@@ -31,16 +31,32 @@ Usage
 
 ```
 
+### Positioning
+
 The overlay will autoposition itself based on it's ratio and chosen base (experimental).
 
-A gif file will be generated in the current path showing the result parrot.
+```
+> parrotify -o http://vignette3.wikia.nocookie.net/runescape2/images/0/0a/Wizard_hat_\(t\)_detail.png -p hat -b mega
+```
 
-TODO
------
+Will generate: 
+
+![parrotify hat demo](http://i.imgur.com/AolpCOP.gif "parrotify hat demo")
+
+
+A gif file will be generated in the current path showing the result parrot. By default it will be called parrot.gif
+
+## TODO
 
 - Error handling whenever user data is not entered properly (missing overlay and positions defined)
 
 - Give an error when node version < 8
+- Prevent replacing existing parrot.gif in the folder.
+- Customise overlay size option.
+
+## Contributing
+
+Please see our [contributing.md](https://github.com/moigonzalez/parrotify-cli/contributing.md)
 
 -----
 
