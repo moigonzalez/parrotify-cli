@@ -56,7 +56,7 @@ A gif file will be generated in the current path showing the result parrot. By d
 
 ## Contributing
 
-Please see our [contributing.md](https://github.com/moigonzalez/parrotify-cli/contributing.md)
+Please see our [contributing.md](https://github.com/moigonzalez/parrotify-cli/blob/master/contributing.md)
 
 -----
 
