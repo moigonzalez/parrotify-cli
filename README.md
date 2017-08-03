@@ -60,5 +60,7 @@ Please see our [contributing.md](https://github.com/moigonzalez/parrotify-cli/bl
 
 -----
 
+[PARTY OR DIE](http://cultofthepartyparrot.com/)
+
 Built using [Parrot As A Service](https://github.com/francoislg/PPaaS)
 
