@@ -66,6 +66,21 @@ class Parrotify extends Component {
     return { x: Math.round(x), y: Math.round(y) };
   }
 
+  requestParrot() {
+    got(`${this.endpoint}`, { encoding: null }).then(response => {
+      let data = 'data:' + response.headers['content-type'] + ';base64,' + new Buffer(response.body).toString('binary');
+      let base64Data = data.replace(/^data:image\/gif;base64,/, '');
+
+      fs.writeFile('parrot.gif', base64Data, 'binary', err => {
+        this.setState({
+          parrot: 'parrot.gif'
+        });
+      });
+    }).catch(error => {
+      console.log(error.response.body);
+    });
+  }
+
   componentDidMount() {
     if (this.args.overlay !== '') {
       const res = probe(this.args.overlay);
@@ -78,21 +93,12 @@ class Parrotify extends Component {
           this.endpoint = `${this.endpoint}&overlayOffsetX=${this.getOffset(parrotSizes[this.args.base], this.args.position, imgSizes).x}`;
           this.endpoint = `${this.endpoint}&overlayOffsetY=${this.getOffset(parrotSizes[this.args.base], this.args.position, imgSizes).y}`;
         }
-        got(`${this.endpoint}`, { encoding: null }).then(response => {
-          let data = 'data:' + response.headers['content-type'] + ';base64,' + new Buffer(response.body).toString('binary');
-          let base64Data = data.replace(/^data:image\/gif;base64,/, '');
-
-          fs.writeFile('parrot.gif', base64Data, 'binary', err => {
-            this.setState({
-              parrot: 'parrot.gif'
-            });
-          });
-        }).catch(error => {
-          console.log(error.response.body);
-        });
+        this.requestParrot();
       }, error => {
         console.log(error);
       });
+    } else {
+      this.requestParrot();
     }
   }
 
