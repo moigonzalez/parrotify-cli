@@ -54,6 +54,10 @@ A gif file will be generated in the current path showing the result parrot. By d
 - Prevent replacing existing parrot.gif in the folder.
 - Customise overlay size option.
 
+## Contributing
+
+Please see our [contributing.md](https://github.com/moigonzalez/parrotify-cli/contributing.md)
+
 -----
 
 Built using [Parrot As A Service](https://github.com/francoislg/PPaaS)
