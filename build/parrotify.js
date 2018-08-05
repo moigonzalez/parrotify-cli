@@ -9,7 +9,8 @@ const Spinner = require('ink-spinner');
 const Args = require('./args');
 const probe = require('probe-image-size');
 const parrotSizes = require('./parrotsizes');
-const ParrotInquirer = require('./parrotInquirer');
+const path = require('path');
+const homedir = require('os').homedir();
 
 class Parrotify extends Component {
   constructor() {
@@ -20,7 +21,6 @@ class Parrotify extends Component {
       parrot: undefined,
       argsEntered: false
     };
-    this.parrotInquirer = new ParrotInquirer();
   }
 
   render(props, state) {
@@ -88,6 +88,7 @@ class Parrotify extends Component {
   }
 
   componentDidMount() {
+    console.log('the position is', this.args.position);
     if (this.args.overlay !== '') {
       const res = probe(this.args.overlay);
       res.then(result => {
@@ -111,23 +112,25 @@ class Parrotify extends Component {
   componentWillMount() {
     this.args = new Args().program;
     if (this.args.wizard) {
-      this.parrotInquirer.init().then(answers => {
-        const eventEmitter = new process.EventEmitter();
-        this.endpoint = `${this.endpoint}/${answers.base}`;
-        this.endpoint = `${this.endpoint}?overlay=${answers.overlay}`;
-        this.endpoint = `${this.endpoint}&delay=${answers.delay}`;
-        this.setState({
-          argsEntered: true
-        });
+      const spawn = require('child_process').spawnSync;
+      spawn('node', ['parrotInquirer.js'], {
+        cwd: __dirname,
+        stdio: 'inherit'
       });
-    } else {
-      this.endpoint = `${this.endpoint}/${this.args.base}`;
-      this.endpoint = `${this.endpoint}?overlay=${this.args.overlay}`;
-      this.endpoint = `${this.endpoint}&delay=${this.args.delay}`;
-      this.setState({
-        argsEntered: true
-      });
+      const answers = JSON.parse(fs.readFileSync(`${homedir}/.parrotify/parrot.tmp.json`, 'utf8'));
+      fs.unlinkSync(path.resolve(`${homedir}/.parrotify/parrot.tmp.json`));
+
+      this.args.base = answers.base;
+      this.args.overlay = answers.overlay;
+      this.args.delay = answers.delay;
+      this.args.position = answers.position;
     }
+    this.endpoint = `${this.endpoint}/${this.args.base}`;
+    this.endpoint = `${this.endpoint}?overlay=${this.args.overlay}`;
+    this.endpoint = `${this.endpoint}&delay=${this.args.delay}`;
+    this.setState({
+      argsEntered: true
+    });
   }
 }
 
