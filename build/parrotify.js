@@ -9,6 +9,7 @@ const Spinner = require('ink-spinner');
 const Args = require('./args');
 const probe = require('probe-image-size');
 const parrotSizes = require('./parrotsizes');
+const ParrotInquirer = require('./parrotInquirer');
 
 class Parrotify extends Component {
   constructor() {
@@ -16,11 +17,16 @@ class Parrotify extends Component {
 
     this.endpoint = 'https://ppaas.herokuapp.com/partyparrot';
     this.state = {
-      parrot: undefined
+      parrot: undefined,
+      argsEntered: false
     };
+    this.parrotInquirer = new ParrotInquirer();
   }
 
   render(props, state) {
+    if (!this.state.argsEntered) {
+      return;
+    }
     if (!this.state.parrot) {
       return h(
         'div',
@@ -104,9 +110,24 @@ class Parrotify extends Component {
 
   componentWillMount() {
     this.args = new Args().program;
-    this.endpoint = `${this.endpoint}/${this.args.base}`;
-    this.endpoint = `${this.endpoint}?overlay=${this.args.overlay}`;
-    this.endpoint = `${this.endpoint}&delay=${this.args.delay}`;
+    if (this.args.wizard) {
+      this.parrotInquirer.init().then(answers => {
+        const eventEmitter = new process.EventEmitter();
+        this.endpoint = `${this.endpoint}/${answers.base}`;
+        this.endpoint = `${this.endpoint}?overlay=${answers.overlay}`;
+        this.endpoint = `${this.endpoint}&delay=${answers.delay}`;
+        this.setState({
+          argsEntered: true
+        });
+      });
+    } else {
+      this.endpoint = `${this.endpoint}/${this.args.base}`;
+      this.endpoint = `${this.endpoint}?overlay=${this.args.overlay}`;
+      this.endpoint = `${this.endpoint}&delay=${this.args.delay}`;
+      this.setState({
+        argsEntered: true
+      });
+    }
   }
 }
 
