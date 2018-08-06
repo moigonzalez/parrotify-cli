@@ -22,7 +22,7 @@ Just running
 > parrotify
 ```
 
-Will start the wizrd which will guide you through the parrot generation process 🦄
+Will start the wizard ✨ which will guide you through the parrot generation process 🦄
 
 You can also give these options:
 
