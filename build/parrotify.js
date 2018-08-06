@@ -111,7 +111,7 @@ class Parrotify extends Component {
 
   componentWillMount() {
     this.args = new Args().program;
-    if (this.args.wizard) {
+    if (this.args.wizard || this.args.rawArgs.length <= 2) {
       const spawn = require('child_process').spawnSync;
       spawn('node', ['parrotInquirer.js'], {
         cwd: __dirname,
