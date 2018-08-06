@@ -9,6 +9,8 @@ const Spinner = require('ink-spinner');
 const Args = require('./args');
 const probe = require('probe-image-size');
 const parrotSizes = require('./parrotsizes');
+const path = require('path');
+const homedir = require('os').homedir();
 
 class Parrotify extends Component {
   constructor() {
@@ -16,11 +18,15 @@ class Parrotify extends Component {
 
     this.endpoint = 'https://ppaas.herokuapp.com/partyparrot';
     this.state = {
-      parrot: undefined
+      parrot: undefined,
+      argsEntered: false
     };
   }
 
   render(props, state) {
+    if (!this.state.argsEntered) {
+      return;
+    }
     if (!this.state.parrot) {
       return h(
         'div',
@@ -82,6 +88,7 @@ class Parrotify extends Component {
   }
 
   componentDidMount() {
+    console.log('the position is', this.args.position);
     if (this.args.overlay !== '') {
       const res = probe(this.args.overlay);
       res.then(result => {
@@ -104,9 +111,26 @@ class Parrotify extends Component {
 
   componentWillMount() {
     this.args = new Args().program;
+    if (this.args.wizard || this.args.rawArgs.length <= 2) {
+      const spawn = require('child_process').spawnSync;
+      spawn('node', ['parrotInquirer.js'], {
+        cwd: __dirname,
+        stdio: 'inherit'
+      });
+      const answers = JSON.parse(fs.readFileSync(`${homedir}/.parrotify/parrot.tmp.json`, 'utf8'));
+      fs.unlinkSync(path.resolve(`${homedir}/.parrotify/parrot.tmp.json`));
+
+      this.args.base = answers.base;
+      this.args.overlay = answers.overlay;
+      this.args.delay = answers.delay;
+      this.args.position = answers.position;
+    }
     this.endpoint = `${this.endpoint}/${this.args.base}`;
     this.endpoint = `${this.endpoint}?overlay=${this.args.overlay}`;
     this.endpoint = `${this.endpoint}&delay=${this.args.delay}`;
+    this.setState({
+      argsEntered: true
+    });
   }
 }
 
