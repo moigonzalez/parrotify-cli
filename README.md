@@ -16,6 +16,16 @@ To display the parrot in your command line you need iTerm > 3, a parrot.gif will
 
 ## Usage
 
+Just running
+
+``` 
+> parrotify
+```
+
+Will start the wizrd which will guide you through the parrot generation process 🦄
+
+You can also give these options:
+
 ```
 > parrotify [options]
 
@@ -23,6 +33,7 @@ To display the parrot in your command line you need iTerm > 3, a parrot.gif will
   Options:
 
     -V, --version             output the version number
+    -w --wizard               Use the wizard (inquirer) to create your custom parrot ⚡️
     -b --base [base]          Base parrot to use
     -o --overlay [overlay]    Image to place on top of the parrot
     -p --position [position]  Position of the overlay (face, hand or hat)
