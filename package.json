@@ -41,6 +41,7 @@
     "ink-image": "^1.1.1",
     "ink-spinner": "^1.0.0",
     "inquirer": "^6.0.0",
-    "probe-image-size": "^3.1.0"
+    "probe-image-size": "^3.1.0",
+    "valid-url": "^1.0.9"
   }
 }
